@@ -26,6 +26,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'rb-fsevent'
   gem 'database_cleaner'
   gem 'factory_girl_rails', require: nil
 end
