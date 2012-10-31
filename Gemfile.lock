@@ -30,6 +30,7 @@ GEM
       multi_json (~> 1.0)
     arel (3.0.2)
     awesome_print (1.1.0)
+    bcrypt-ruby (3.0.1)
     binding_of_caller (0.6.8)
     builder (3.0.4)
     coderay (1.0.8)
@@ -41,6 +42,11 @@ GEM
       execjs
     coffee-script-source (1.4.0)
     database_cleaner (0.9.1)
+    devise (2.1.2)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (~> 3.1)
+      warden (~> 1.2.1)
     diff-lcs (1.1.3)
     erubis (2.7.0)
     execjs (1.4.0)
@@ -79,7 +85,15 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.19)
+    mongoid (3.0.9)
+      activemodel (~> 3.1)
+      moped (~> 1.1)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.22)
+    moped (1.2.7)
     multi_json (1.3.6)
+    origin (1.0.9)
+    orm_adapter (0.4.0)
     polyglot (0.3.3)
     pry (0.9.10)
       coderay (~> 1.0.5)
@@ -151,6 +165,8 @@ GEM
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    warden (1.2.1)
+      rack (>= 1.0)
     yard (0.8.3)
 
 PLATFORMS
@@ -160,12 +176,14 @@ DEPENDENCIES
   awesome_print
   coffee-rails (~> 3.2.1)
   database_cleaner
+  devise
   factory_girl_rails
   guard
   guard-bundler
   guard-rspec
   guard-yard
   jquery-rails
+  mongoid
   pry-nav
   pry-rails
   pry-stack_explorer
