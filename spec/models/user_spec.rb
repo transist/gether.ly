@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe User do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'should create instance via Factory' do
+    expect {
+      create(:user)
+    }.to change(User, :count).by(1)
+  end
 end
