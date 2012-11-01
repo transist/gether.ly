@@ -15,6 +15,7 @@ group :development do
   gem 'guard', require: nil
   gem 'guard-bundler', require: nil
   gem 'guard-rspec', require: nil
+  gem 'guard-spork', require: nil
   gem 'guard-yard', require: nil
 end
 
@@ -28,6 +29,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'spork', require: nil
   gem 'rb-fsevent'
   gem 'database_cleaner'
   gem 'factory_girl_rails', require: nil

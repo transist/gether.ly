@@ -1,37 +1,53 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
-require 'rspec/rails'
-require 'rspec/autorun'
-require 'factory_girl_rails'
+require 'rubygems'
+require 'spork'
 
-# Requires supporting ruby files with custom matchers and macros, etc,
-# in spec/support/ and its subdirectories.
-Dir[Rails.root.join('spec/support/**/*.rb')].each {|f| require f}
+Spork.prefork do
+  ENV['RAILS_ENV'] ||= 'test'
 
-RSpec.configure do |config|
-  # If true, the base class of anonymous controllers will be inferred
-  # automatically. This will be the default behavior in future versions of
-  # rspec-rails.
-  config.infer_base_class_for_anonymous_controllers = false
+  # Prevent Devise load User model, it should be load in each_run block.
+  require 'rails/application'
+  Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
 
-  # Run specs in random order to surface order dependencies. If you find an
-  # order dependency and want to debug it, you can fix the order by providing
-  # the seed, which is printed after each run.
-  #     --seed 1234
-  config.order = 'random'
+  require File.expand_path('../../config/environment', __FILE__)
+  require 'rspec/rails'
 
-  config.include FactoryGirl::Syntax::Methods
+  RSpec.configure do |config|
+    # If true, the base class of anonymous controllers will be inferred
+    # automatically. This will be the default behavior in future versions of
+    # rspec-rails.
+    config.infer_base_class_for_anonymous_controllers = false
 
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
+    # Run specs in random order to surface order dependencies. If you find an
+    # order dependency and want to debug it, you can fix the order by providing
+    # the seed, which is printed after each run.
+    #     --seed 1234
+    config.order = 'random'
+
+    config.before(:suite) do
+      DatabaseCleaner.strategy = :truncation
+    end
+
+    config.before(:each) do
+      DatabaseCleaner.start
+    end
+
+    config.after(:each) do
+      DatabaseCleaner.clean
+    end
+  end
+end
+
+Spork.each_run do
+  require 'factory_girl_rails'
+
+  RSpec.configure do |config|
+    config.include FactoryGirl::Syntax::Methods
   end
 
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
+  # Requires supporting ruby files with custom matchers and macros, etc,
+  # in spec/support/ and its subdirectories.
+  Dir[Rails.root.join('spec/support/**/*.rb')].each {|f| require f }
 
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
+  FactoryGirl.reload
+  I18n.backend.reload!
 end
