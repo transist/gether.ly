@@ -4,7 +4,7 @@ describe 'Pages' do
   describe 'Homepage' do
     it 'should show welcome message' do
       get '/'
-      expect(response.body) == 'Welcome to gether.ly'
+      expect(last_response.body) == 'Welcome to gether.ly'
     end
   end
 end
