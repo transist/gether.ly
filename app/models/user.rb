@@ -41,5 +41,11 @@ class User
   ## Token authenticatable
   # field :authentication_token, type: String
 
+  field :country_code, type: String
+  field :phone, type: String
   field :name, type: String
+
+  validates :country_code, presence: true
+  validates :phone, presence: true
+  validates :name, presence: true
 end

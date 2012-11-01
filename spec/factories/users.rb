@@ -2,6 +2,8 @@
 
 FactoryGirl.define do
   factory :user do
+    country_code '+86'
+    sequence(:phone) {|n| 13917794404 + n }
     sequence(:name) {|n| "user_#{n}" }
     email { "#{name}@example.com" }
     password 'password'

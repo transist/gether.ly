@@ -23,6 +23,11 @@ Spork.prefork do
     #     --seed 1234
     config.order = 'random'
 
+    config.include Rack::Test::Methods, type: :request
+    config.include RSpec::Rails::RequestExampleGroup, type: :request, example_group: {
+      file_path: config.escaped_path(%w[spec api])
+    }
+
     config.before(:suite) do
       DatabaseCleaner.strategy = :truncation
     end
