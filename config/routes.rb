@@ -6,7 +6,7 @@ GetherLy::Application.routes.draw do
       namespace :v1 do
         devise_scope :user do
           post '/signup', to: 'registrations#create'
-          get '/account/verify_credentials', to: 'account#verify_credentials'
+          get '/account/verify_credentials', to: 'accounts#verify_credentials'
         end
       end
     # end
