@@ -48,4 +48,6 @@ class User
   validates :country_code, presence: true
   validates :phone, presence: true
   validates :name, presence: true
+
+  has_many :created_hosts, class_name: 'Event'
 end
