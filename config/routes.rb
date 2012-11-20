@@ -8,6 +8,11 @@ GetherLy::Application.routes.draw do
           post '/signup', to: 'registrations#create'
           get '/account/verify_credentials', to: 'accounts#verify_credentials'
         end
+        resources :events do
+          collection do
+            post '/create', to: 'events#create'
+          end
+        end
       end
     # end
   end
