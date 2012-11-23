@@ -11,6 +11,12 @@ GetherLy::Application.routes.draw do
         resources :events do
           collection do
             post '/create', to: 'events#create'
+            get '/index', to: 'events#index'
+          end
+
+          member do
+            get '/accept', to: 'events#accept'
+            get '/decline', to: 'events#decline'
           end
         end
       end

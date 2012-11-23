@@ -75,3 +75,23 @@ module GetherLy
     config.assets.version = '1.0'
   end
 end
+
+EmailYak.api_key = 'uz6foruzcwhdkvr'
+
+class Hash
+  def to_binding(object = Object.new)
+    object.instance_eval("def binding_for(#{keys.join(",")}) binding end")
+    object.binding_for(*values)
+  end
+end
+
+class Document
+  def initialize(template)
+    @template = ERB.new(template)
+  end
+  
+  def interpolate(replacements = {})
+    @template.result(replacements.to_binding)
+  end
+end
+

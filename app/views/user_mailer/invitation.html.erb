@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style type="text/css">
+      img.logo { 
+        height: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <hr />
+    <p>
+      Hi, you, <%= name %>, are invited by <%= host %> to <%= location %> from <%= start_time %> to <%= end_time %>.
+      <br />
+      Oh, <%= host %> also got some words for you:
+      <br />
+      <%= detail %>
+    </p>
+    
+    RSVP NEEDED!!<br>
+    Accept it <a href='<%= accept_url %>'>now</a>
+    <br />
+    Or maybe <a href='<%= decline_url %>'>next time</a>
+    <hr />
+  </body>
+</html>

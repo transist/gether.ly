@@ -7,12 +7,9 @@ class Event
   field :location, type: String
   field :detail, type: String
 
-  belongs_to :host, class_name: 'User'
-  embeds_many :invitee, class_name: 'Identity'
-  # How to connect them?
-  embeds_many :invitations
+  belongs_to :host, class_name: 'User', inverse_of: :created_hosts
 
-  accepts_nested_attributes_for :invitations
+  has_many :invitations
 
   def as_json(options = nil)
     event = super

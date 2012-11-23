@@ -49,5 +49,5 @@ class User
   validates :phone, presence: true
   validates :name, presence: true
 
-  has_many :created_hosts, class_name: 'Event'
+  has_many :created_hosts, class_name: 'Event', inverse_of: :host
 end

@@ -4,6 +4,10 @@ gem 'rails', '3.2.8'
 gem 'jquery-rails'
 gem 'mongoid'
 gem 'devise'
+gem 'nokogiri'
+gem 'emailyak', :git => 'https://github.com/ballantyne/emailyak.git'
+gem 'premailer'
+gem 'state_machine'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
