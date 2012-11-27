@@ -3,7 +3,9 @@ class Invitation
 
   field :email, type: String
   field :name, type: String
-  field :token, type: String, default: SecureRandom.hex(8)
+  field :token, type: String
+
+  after_create :generate_token
 
   belongs_to :event
 
@@ -55,5 +57,10 @@ class Invitation
     else
       url = "http://127.0.0.1:3000/v1/events/#{self.event._id}/decline?token=#{self.token}"
     end
+  end
+
+  protected
+  def generate_token
+    self.update_attributes token: SecureRandom.hex(8)
   end
 end

@@ -15,6 +15,7 @@ GetherLy::Application.routes.draw do
           end
 
           member do
+            get '/invitations', to: 'events#invitations'
             get '/accept', to: 'events#accept'
             get '/decline', to: 'events#decline'
           end
