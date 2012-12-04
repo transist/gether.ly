@@ -1,0 +1,95 @@
+require 'pathname'
+require 'hashie'
+Rails = Hashie::Mash.new(
+  env: ENV['RAILS_ENV']  || 'production',
+  root: '/var/www/getherly.com/current'
+)
+
+if Rails.env == 'production'
+  God.watch do |w|
+    w.name      = 'unicorn'
+    w.interval  = 30.seconds # default
+    w.dir       = Rails.root
+    w.start = "bin/unicorn_rails -c config/unicorn.conf.rb -D -E #{Rails.env}"
+    w.stop = "kill -QUIT `cat #{Rails.root}/tmp/pids/unicorn.pid`"
+    w.restart = "kill -USR2 `cat #{Rails.root}/tmp/pids/unicorn.pid`"
+    w.start_grace = 10.seconds
+    w.restart_grace = 10.seconds
+    w.pid_file = "#{Rails.root}/tmp/pids/unicorn.pid"
+    w.uid = 'deploy'
+    w.gid = 'deploy'
+    w.behavior(:clean_pid_file)
+
+    w.start_if do |start|
+      start.condition(:process_running) do |c|
+        c.interval = 5.seconds
+        c.running = false
+      end
+    end
+
+    w.restart_if do |restart|
+      restart.condition(:memory_usage) do |c|
+        c.above = 300.megabytes
+        c.times = [3, 5] # 3 out of 5 intervals
+      end
+
+      restart.condition(:cpu_usage) do |c|
+        c.above = 50.percent
+        c.times = 5
+      end
+    end
+
+    w.lifecycle do |on|
+      on.condition(:flapping) do |c|
+        c.to_state = [:start, :restart]
+        c.times = 5
+        c.within = 5.minute
+        c.transition = :unmonitored
+        c.retry_in = 10.minutes
+        c.retry_times = 5
+        c.retry_within = 2.hours
+      end
+    end
+  end
+
+  unicorn_worker_memory_limit = 200_000
+
+  Thread.new do
+    loop do
+      begin
+        # Unicorn workers
+        lines = `ps -e -www -o pid,rss,command | grep '[u]nicorn_rails worker'`.lines
+        lines.each do |line|
+          worker_pid = line.split(' ')[0].to_i
+          if determine_private_dirty_rss(worker_pid) > unicorn_worker_memory_limit
+            # Tell the worker to die after it finishes serving its request
+            ::Process.kill('QUIT', worker_pid)
+          end
+        end
+      rescue Exception
+        # Don't die ever once we've tested this
+        nil
+      end
+
+      sleep 30
+    end
+  end
+
+end
+
+# Taken from passenger_memory_stats script
+# Returns the private dirty RSS for the given process, in KB.
+def determine_private_dirty_rss(pid)
+  total = 0
+  File.readlines("/proc/#{pid}/smaps").each do |line|
+    line =~ /^(Private)_Dirty: +(\d+)/
+    if $2
+      total += $2.to_i
+    end
+  end
+  total
+rescue Errno::EACCES, Errno::ENOENT
+  0
+end
+
+# vim: set ft=ruby:
