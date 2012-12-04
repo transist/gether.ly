@@ -40,3 +40,7 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails', require: nil
 end
+
+group :production do
+  gem 'unicorn', require: nil
+end
