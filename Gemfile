@@ -21,6 +21,8 @@ group :development do
   gem 'guard-rspec', require: nil
   gem 'guard-spork', require: nil
   gem 'guard-yard', require: nil
+  gem 'capistrano', require: nil
+  gem 'capistrano_colors', require: nil
 end
 
 group :development, :test do
