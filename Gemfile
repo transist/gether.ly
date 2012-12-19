@@ -5,8 +5,8 @@ gem 'jquery-rails'
 gem 'mongoid'
 gem 'devise'
 gem 'nokogiri'
-gem 'emailyak', :git => 'https://github.com/ballantyne/emailyak.git'
-gem 'premailer'
+gem 'emailyak', git: 'https://github.com/ballantyne/emailyak.git'
+gem 'premailer', git: 'git://github.com/alexdunae/premailer.git'
 gem 'state_machine'
 
 group :assets do

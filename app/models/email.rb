@@ -2,7 +2,11 @@
 class Email
   def self.send_mail(subject, template_name, email, info)
     text = Document.new(File.read(Rails.root.to_s + "/app/views/user_mailer/#{template_name}.text.erb")).interpolate(info)
-    html = Premailer.new(Document.new(File.read(Rails.root.to_s + "/app/views/user_mailer/#{template_name}.html.erb")).interpolate(info), {with_html_string: true}).to_inline_css
+    html = Premailer.new(
+        Document.new(File.read(Rails.root.to_s + "/app/views/user_mailer/#{template_name}.html.erb")).interpolate(info), 
+        {with_html_string: true, input_encoding: Encoding::UTF_8} 
+    ).to_inline_css
+
     params = {
      "ToAddress"=> email,
      "FromName"=> 'Getherly',

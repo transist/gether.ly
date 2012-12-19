@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/alexdunae/premailer.git
+  revision: 023af276c8106294980eb9007e7ca4901fd568fd
+  specs:
+    premailer (1.7.3)
+      css_parser (>= 1.1.9)
+      htmlentities (>= 4.0.0)
+
+GIT
   remote: https://github.com/ballantyne/emailyak.git
   revision: faca421166e2314431bd5ba5611a9160bec3e1c3
   specs:
@@ -133,9 +141,6 @@ GEM
     origin (1.0.9)
     orm_adapter (0.4.0)
     polyglot (0.3.3)
-    premailer (1.7.3)
-      css_parser (>= 1.1.9)
-      htmlentities (>= 4.0.0)
     pry (0.9.10)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -240,7 +245,7 @@ DEPENDENCIES
   jquery-rails
   mongoid
   nokogiri
-  premailer
+  premailer!
   pry-nav
   pry-rails
   pry-stack_explorer
