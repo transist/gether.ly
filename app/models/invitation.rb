@@ -45,7 +45,7 @@ class Invitation
 
   def accept_url
     if Rails.env == 'production'
-      url = "http://getherly.com/v1/events/#{self.event._id}/accept?token=#{self.token}"
+      url = "http://staging.getherly.com/v1/events/#{self.event._id}/accept?token=#{self.token}"
     else
       url = "http://127.0.0.1:3000/v1/events/#{self.event._id}/accept?token=#{self.token}"
     end
@@ -53,7 +53,7 @@ class Invitation
 
   def decline_url
     if Rails.env == 'production'
-      url = "http://getherly.com/v1/events/#{self.event._id}/decline?token=#{self.token}"
+      url = "http://staging.getherly.com/v1/events/#{self.event._id}/decline?token=#{self.token}"
     else
       url = "http://127.0.0.1:3000/v1/events/#{self.event._id}/decline?token=#{self.token}"
     end
