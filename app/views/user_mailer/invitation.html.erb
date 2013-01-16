@@ -11,17 +11,26 @@
   <body>
     <hr />
     <p>
-      Hi, you, <%= name %>, are invited by <%= host %> to <%= location %> from <%= start_time %> to <%= end_time %>.
-      <br />
-      Oh, <%= host %> also got some words for you:
-      <br />
-      <%= detail %>
+      Hi, <%= invitee %>,
     </p>
-    
-    RSVP NEEDED!!<br>
-    Accept it <a href='<%= accept_url %>'>now</a>
-    <br />
-    Or maybe <a href='<%= decline_url %>'>next time</a>
-    <hr />
+    <p>
+      <%= host %> has invited you to <%= event_name %>.
+    </p>
+
+    <p>
+      Time: <%= time_range %><br />
+      Location: <%= location %>
+    </p>
+
+    <p><%= detail %></p>
+
+    <p>Please RSVP below:</p>
+
+    <p>
+      <a href='<%= accept_url %>'>Accept it now</a><br />
+      <a href='<%= decline_url %>'>Maybe next time</a>
+    </p>
+
+    <p>This is a automatic message from Getherly, please do not reply.</p>
   </body>
 </html>

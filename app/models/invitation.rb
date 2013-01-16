@@ -24,7 +24,7 @@ class Invitation
   end
 
   def mail
-    subject = 'Hi, you are invited.'
+    subject = "#{name} you are invited to #{event.name}"
     template_name = 'invitation'
     email_address = Rails.env == 'production' ? self.email : 'simsicon@gmail.com'
     self.send_invitation if Email.send_mail(subject, template_name, email_address, email_params)
@@ -32,11 +32,11 @@ class Invitation
 
   def email_params
     {
-      name: self.name,
+      invitee: self.name,
+      event_name: event.name,
       host: self.event.host.name,
       location: self.event.location,
-      start_time: self.event.start_time,
-      end_time: self.event.end_time,
+      time_range: self.event.time_range,
       detail: self.event.detail,
       accept_url: accept_url,
       decline_url: decline_url
