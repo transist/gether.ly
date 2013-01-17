@@ -20,7 +20,7 @@ class Event
   def time_range
     return @time_range if @time_range
 
-    if start_time.start_of_day.to_i == end_time.start_of_day.to_i
+    if start_time.beginning_of_day.to_i == end_time.beginning_of_day.to_i
       # RubyMotion does implement %P for Time#strftime so we need downcase it manually
       @time_range = start_time.strftime('%a, %b %-d ')
       @time_range << 'from '
